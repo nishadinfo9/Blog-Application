@@ -86,55 +86,57 @@ const PostForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 py-10">
-      <form
-        onSubmit={handleSubmit(submited)}
-        className="w-full max-w-xl bg-neutral text-neutral-content p-10 rounded-2xl shadow-xl space-y-6"
-      >
-        <h2 className="text-3xl font-bold text-center text-white mb-4">
-          📝 Create New Blog
-        </h2>
+    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
+  <form
+    onSubmit={handleSubmit(submited)}
+    className="w-full max-w-xl bg-neutral text-neutral-content p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl space-y-6"
+  >
+    <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-4">
+      📝 Create New Blog
+    </h2>
 
-        <div className="space-y-4">
-          <Input
-            label={"Title"}
-            type={"text"}
-            placeholder={"Enter your blog title"}
-            {...register("title", { required: true })}
-          />
+    <div className="space-y-4">
+      <Input
+        label={"Title"}
+        type={"text"}
+        placeholder={"Enter your blog title"}
+        {...register("title", { required: true })}
+      />
 
-          <Textaeria
-            label={"Content"}
-            placeholder={"Write your blog content here..."}
-            {...register("content", { required: true })}
-          />
-          <Input
-            type={"file"}
-            accept="image/*"
-            className={
-              "file-input file-input-bordered w-full bg-gray-700 text-white"
-            }
-            label={"Upload Image"}
-            {...register("image", { required: !id })}
-          />
+      <Textaeria
+        label={"Content"}
+        placeholder={"Write your blog content here..."}
+        {...register("content", { required: true })}
+      />
 
-          {existingPost.image && (
-            <div className="mt-2">
-              <p className="text-sm text-gray-400 mb-1">Current Image:</p>
-              <img
-                src={existingPost.image}
-                alt="Current"
-                className="w-32 h-32 object-cover rounded-md"
-              />
-            </div>
-          )}
+      <Input
+        type={"file"}
+        accept="image/*"
+        className="file-input file-input-bordered w-full bg-gray-700 text-white"
+        label={"Upload Image"}
+        {...register("image", { required: !id })}
+      />
+
+      {existingPost.image && (
+        <div className="mt-2">
+          <p className="text-sm text-gray-400 mb-1">Current Image:</p>
+          <img
+            src={existingPost.image}
+            alt="Current"
+            className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-md"
+          />
         </div>
-
-        <div className="pt-4">
-          <Button type={"submit"}>{loading ? "Submiting" : "Submit"}</Button>
-        </div>
-      </form>
+      )}
     </div>
+
+    <div className="pt-4">
+      <Button type={"submit"} className="w-full sm:w-auto">
+        {loading ? "Submitting" : "Submit"}
+      </Button>
+    </div>
+  </form>
+</div>
+
   );
 };
 
