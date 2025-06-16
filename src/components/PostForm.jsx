@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addPost, updatePostInStore } from "../redux/postSlice";
 import storageConf from "../appwrite/storage";
 import { useNavigate, useParams } from "react-router-dom";
+import RTE from "../RTE/RTE";
 
 const PostForm = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const { register, handleSubmit, setValue, getValues, control, reset } = useForm();
   const [existingPost, setExistingPost] = useState({});
 
   const posts = useSelector((state) => state.post.posts);
@@ -103,11 +104,12 @@ const PostForm = () => {
         {...register("title", { required: true })}
       />
 
-      <Textaeria
+      {/* <Textaeria
         label={"Content"}
         placeholder={"Write your blog content here..."}
         {...register("content", { required: true })}
-      />
+      /> */}
+      <RTE name={'content'} control={control} label={'Content: '} defaultValue={getValues('content')}/>
 
       <Input
         type={"file"}

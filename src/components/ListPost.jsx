@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import parse from "html-react-parser";
 
 const ListPost = ({ posts }) => {
   const postList = Array.isArray(posts) ? posts : [];
@@ -33,9 +34,9 @@ const ListPost = ({ posts }) => {
                   <h3 className="text-xl sm:text-2xl font-semibold text-orange-400">
                     {post.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-gray-300 line-clamp-3">
-                    {post.content}
-                  </p>
+                  <div className="text-sm sm:text-base text-gray-300 line-clamp-3">
+                    {parse(post.content)}
+                  </div>
                 </div>
                 <Link
                   to={`/post/${post.$id}`}
