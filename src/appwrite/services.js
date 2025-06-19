@@ -1,4 +1,4 @@
-import { Client, Databases, ID } from "appwrite";
+import { Client, Databases, ID, Permission, Query, Role } from "appwrite";
 import conf from "../conf/conf";
 
 export class Services {
@@ -10,9 +10,9 @@ export class Services {
     this.databases = new Databases(this.client);
   }
 
-  createPost = async ({ title, content, image }) => {
+  createPost = async ({ title, content, image, userId }) => {
     try {
-      const sesssion = await this.databases.createDocument(
+      const response = await this.databases.createDocument(
         conf.DatabaseId,
         conf.CollectionId,
         ID.unique(),
@@ -20,9 +20,14 @@ export class Services {
           title,
           content,
           image,
-        }
+          userId, // 👈 add userId to the document
+        },
+        [
+          Permission.read(Role.user(userId)), // 👈 only owner can read
+          Permission.write(Role.user(userId)), // 👈 only owner can write
+        ]
       );
-      return sesssion;
+      return response;
     } catch (error) {
       throw error;
     }
@@ -46,15 +51,28 @@ export class Services {
     }
   };
 
-  allpost = async () => {
+  allpost = async (userId) => {
     try {
-      const session = await this.databases.listDocuments(
+      const response = await this.databases.listDocuments(
         conf.DatabaseId,
-        conf.CollectionId
+        conf.CollectionId,
+        [Query.equal("userId", userId)] // 👈 only fetch this user's posts
       );
-      return session;
+      return response;
     } catch (error) {
       throw error;
+    }
+  };
+
+  getPost = async (userId) => {
+    try {
+      return await this.databases.getDocument(
+        conf.DatabaseId,
+        conf.CollectionId,
+        userId
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 

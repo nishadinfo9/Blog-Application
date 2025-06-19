@@ -15,7 +15,9 @@ const postSlice = createSlice({
     allPost: (state, actions) => {
       state.posts = actions.payload;
     },
-
+    profilePost: (state, action)=>{
+      state.posts = action.payload
+    },
     updatePostInStore(state, action) {
       const updatedPost = action.payload;
       const index = state.posts.findIndex((p) => p.$id === updatedPost.$id);
@@ -26,5 +28,5 @@ const postSlice = createSlice({
   },
 });
 
-export const { addPost, allPost, updatePostInStore} = postSlice.actions;
+export const { addPost, allPost, updatePostInStore, profilePost} = postSlice.actions;
 export default postSlice.reducer;

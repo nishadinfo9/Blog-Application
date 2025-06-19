@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../appwrite/auth";
 import { logout } from "../../redux/authSlice";
+import profileIcon from "../../assets/profile.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navItem.map((item) => (
               <button
                 key={item.name}
@@ -46,6 +47,22 @@ const Header = () => {
               </button>
             ))}
 
+            {/* Profile Icon */}
+            {authStatus && (
+              <button
+                onClick={() => navigate("/profile")}
+                className="cursor-pointer"
+                title="Profile"
+              >
+                <img
+                  className="h-10 w-10 rounded-full border-2 border-orange-500"
+                  src={profileIcon}
+                  alt="Profile"
+                />
+              </button>
+            )}
+
+            {/* Auth Button */}
             {authStatus ? (
               <button
                 onClick={handleLogout}
@@ -89,6 +106,21 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
+
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                navigate("/profile");
+              }}
+              className="flex items-center gap-2 text-md font-medium hover:text-orange-500"
+            >
+              <img
+                src={profileIcon}
+                className="h-8 w-8 rounded-full border"
+                alt="Profile"
+              />
+              <span>Profile</span>
+            </button>
 
             {authStatus ? (
               <button

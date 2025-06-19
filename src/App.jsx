@@ -15,6 +15,7 @@ import { login, logout } from "./redux/authSlice";
 import authService from "./appwrite/auth";
 import { useDispatch } from "react-redux";
 import Protected from "./Protected";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,14 @@ const App = () => {
           element={
             <Protected>
               <SingleBlog />
+            </Protected>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Protected>
+              <Profile />
             </Protected>
           }
         />
