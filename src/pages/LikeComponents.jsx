@@ -22,7 +22,7 @@ const LikeComponents = ({ postId }) => {
       );
       setIsLike(!!userLike);
     } catch (error) {
-      toast.error("liked failed");
+      throw error
     } finally {
       setloading(false);
     }
