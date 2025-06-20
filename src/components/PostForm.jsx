@@ -10,6 +10,7 @@ import storageConf from "../appwrite/storage";
 import { useNavigate, useParams } from "react-router-dom";
 import RTE from "../RTE/RTE";
 import authService from "../appwrite/auth";
+import toast from "react-hot-toast";
 
 const PostForm = () => {
   const [loading, setLoading] = useState(false);
@@ -59,12 +60,8 @@ const PostForm = () => {
         return;
       }
 
-      const existingPost = await services.getPost(id); // No `.documents`
+      const existingPost = await services.getPost(id); 
 
-      console.log("Logged in user ID:", user.$id);
-      console.log("Post owner ID:", existingPost.userId);
-
-      // Authorization check
       if (existingPost.userId !== user.$id) {
         alert("You are not authorized to update this post.");
         return;
@@ -86,6 +83,7 @@ const PostForm = () => {
       dispatch(updatePostInStore(updatedPost));
       navigate(`/post/${id}`);
       reset();
+      toast.success('Post Edited')
     } else {
       // POST CREATE
 
@@ -107,9 +105,10 @@ const PostForm = () => {
         dispatch(addPost(session));
         navigate("/"); // ✅ Move here
         reset(); // ✅ Move here
+        toast.success('post')
       } catch (error) {
+        toast.error('post failed')
         console.error("❌ Error:", error.message);
-        alert(error.message);
       } finally {
         setLoading(false);
       }

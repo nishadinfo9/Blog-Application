@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import authService from "../../appwrite/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
@@ -24,7 +25,9 @@ const Register = () => {
 
       dispatch(login(user))
       navigate("/");
+      toast.success('account created')
     } catch (error) {
+      toast.error('account failed')
       console.log(error);
     }
   };

@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../../appwrite/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -20,8 +21,10 @@ const Login = () => {
       const getUser = await authService.getCurrentUser()
       dispatch(login(getUser))
       navigate('/')
+      toast.success('login successfully')
     }
     } catch (error) {
+      toast.error('login failed')
       console.log(error)
     }
   };

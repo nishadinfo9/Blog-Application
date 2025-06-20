@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../../appwrite/auth";
 import { logout } from "../../redux/authSlice";
 import profileIcon from "../../assets/profile.png";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +18,9 @@ const Header = () => {
       await authService.logout();
       dispatch(logout());
       navigate("/login");
+      toast.success('logout')
     } catch (error) {
+      toast.error('logout failed')
       console.log("Logout error:", error);
     }
   };
@@ -66,14 +69,14 @@ const Header = () => {
             {authStatus ? (
               <button
                 onClick={handleLogout}
-                className="px-5 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
+                className="px-5 py-2 cursor-pointer bg-red-500 text-white rounded-full hover:bg-red-600 transition"
               >
                 Logout
               </button>
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="px-5 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition"
+                className="px-5 py-2 cursor-pointer bg-orange-500 text-white rounded-full hover:bg-orange-600 transition"
               >
                 Login
               </button>
